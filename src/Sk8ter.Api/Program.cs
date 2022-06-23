@@ -1,6 +1,7 @@
 using System.Reflection;
 using Serilog;
 using Serilog.Events;
+using Sk8ter.Api.Middleware;
 using Sk8ter.Application;
 using Sk8ter.Application.Common.Mappings;
 using Sk8ter.Application.Interfaces;
@@ -9,7 +10,7 @@ using Sk8ter.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host
-    .UseSerilog((ctx, lc) => lc
+    .UseSerilog((_, lc) => lc
         .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
         .Enrich.FromLogContext()
         .WriteTo.Console());
@@ -49,6 +50,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomExceptionHandler();
 
 app.UseHttpsRedirection();
 

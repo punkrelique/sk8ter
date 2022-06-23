@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Sk8ter.Application.Tricks.Commands.UpdateTrick;
 
 namespace Sk8ter.Application.Tricks.Commands.CreateTrick;
 

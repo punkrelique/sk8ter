@@ -19,8 +19,4 @@
       <ProjectReference Include="..\Sk8ter.Domain\Sk8ter.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Common" />
-    </ItemGroup>
-
 </Project>

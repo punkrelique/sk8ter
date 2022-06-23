@@ -1,10 +1,18 @@
 using System.Reflection;
+using Serilog;
+using Serilog.Events;
 using Sk8ter.Application;
 using Sk8ter.Application.Common.Mappings;
 using Sk8ter.Application.Interfaces;
 using Sk8ter.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host
+    .UseSerilog((ctx, lc) => lc
+        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+        .Enrich.FromLogContext()
+        .WriteTo.Console());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

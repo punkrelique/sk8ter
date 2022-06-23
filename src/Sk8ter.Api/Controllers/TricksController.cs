@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Sk8ter.Application.Tricks.Commands.CreateTrick;
 using Sk8ter.Application.Tricks.Commands.DeleteTrick;
 using Sk8ter.Application.Tricks.Commands.UpdateTrick;
@@ -13,7 +14,7 @@ public class TricksController : BaseController
     [HttpGet("{id:int}")]
     public async Task<ActionResult<TrickDetailsVm>> GetTrick(int id)
     {
-        var query = new GetTrickDetailsQuery { Id = id};
+        var query = new GetTrickDetailsQuery { Id = id };
         var vm = await Mediator.Send(query);
 
         return Ok(vm);

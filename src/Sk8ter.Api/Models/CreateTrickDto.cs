@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using Sk8ter.Application.Common.Mappings;
 using Sk8ter.Application.Tricks.Commands.CreateTrick;
 using Sk8ter.Domain.Enums;

@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using Sk8ter.Api.Models;
 using Sk8ter.Application.Tricks.Commands.CreateTrick;
 using Sk8ter.Application.Tricks.Commands.DeleteTrick;
 using Sk8ter.Application.Tricks.Commands.UpdateTrick;
 using Sk8ter.Application.Tricks.Queries.GetAllTricks;
 using Sk8ter.Application.Tricks.Queries.GetTrickDetails;
 using Sk8ter.Domain.Entities;
-using Sk8ter.Domain.Enums;
 
 namespace Sk8ter.Api.Controllers;
 public class TricksController : BaseController
 {
+    private readonly IMapper _mapper;
+
+    public TricksController(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+    
     [HttpGet("{id:int}")]
     public async Task<ActionResult<TrickDetailsVm>> GetTrick(int id)
     {
@@ -30,15 +38,11 @@ public class TricksController : BaseController
     }
     
     [HttpPost]
-    public async Task<ActionResult<TrickListVm>> CreateTrick(string name, Difficulty difficulty) 
+    public async Task<ActionResult<TrickListVm>> CreateTrick(
+        [FromBody] CreateTrickDto trickDto)
     {
-        var query = new CreateTrickCommand
-        {
-            Name = name,
-            Difficulty = difficulty
-        };
-        
-        var vm = await Mediator.Send(query);
+        var command = _mapper.Map<CreateTrickCommand>(trickDto);
+        var vm = await Mediator.Send(command);
 
         return Ok(vm);
     }
@@ -54,15 +58,10 @@ public class TricksController : BaseController
 
     [HttpPut]
     public async Task<ActionResult<Trick>> UpdateTrick(
-        [FromBody] Trick trick)
+        [FromBody] UpdateTrickDto trickDto)
     {
-        var query = new UpdateTrickCommand
-        {
-            Id = trick.Id,
-            Name = trick.Name,
-            Difficulty = trick.Difficulty
-        };
-        var vm = await Mediator.Send(query);
+        var command = _mapper.Map<UpdateTrickCommand>(trickDto);
+        var vm = await Mediator.Send(command);
 
         return Ok(vm);
     }

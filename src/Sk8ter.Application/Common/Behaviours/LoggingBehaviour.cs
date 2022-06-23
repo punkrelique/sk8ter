@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Sk8ter.Application.Common.Behaviours;
